@@ -4,9 +4,11 @@ pipeline {
     //execute in any available agent
     agent any
     //Determine in which node will the pipeline be executed
- 
+    //En un entorno más específico hay que decirle en que SO se quiere ejecutar
     stages {
             stage('before') {
+                
+                
                 steps {
                     sh 'python3 --version'
                     sh 'pip3 install -r requirements.txt'
