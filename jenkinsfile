@@ -8,10 +8,12 @@ pipeline{
             sh 'python3 --version'
             sh 'pip3 install -r requirements.txt'
         }
-    stage('build')
+    }
+    stage('build'){
         steps {
             sh 'python3 -m tox -e build'
               }
+
     }
     stage('test') { //Esto lo que hace es ejecutar las pruebas unitarias
                 when{ //Esta sección nos permte hcaer una comparación de una varianle.
