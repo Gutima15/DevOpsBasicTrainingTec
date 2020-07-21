@@ -1,0 +1,26 @@
+//le dice jenkins que es un pipeline
+pipeline{
+ //Determine in which node will the pipeline be executed
+ //En un entorno más específico hay que decirle en que sO se quiere ejecutar
+    agent any
+    stage('before'){ // esto es un paso, que sucede dentro de nuestra automatización como instalar depenciencias o compilar un programa, etc
+        steps{
+            sh 'python3 --version'
+            sh 'pip3 install -r requirements.txt'
+        }
+    stage('build')
+        steps {
+            sh 'python3 -m tox -e build'
+              }
+    }
+    stage('test') { //Esto lo que hace es ejecutar las pruebas unitarias
+                when{ //Esta sección nos permte hcaer una comparación de una varianle.
+                //Para este caso esta variable no está en nuestra definición sino qu se al deamos desde jenkins
+                    //only execute tests is test parameter is true
+                    expression { params.test == true }
+                }
+                steps {
+                    sh 'python3 -m tox -e test'
+                }
+            }
+}
